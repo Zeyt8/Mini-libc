@@ -6,6 +6,10 @@
 
 off_t lseek(int fd, off_t offset, int whence)
 {
-	/* TODO: Implement lseek(). */
-	return -1;
+	off_t result = syscall(__NR_lseek, fd, offset, whence);
+    if (result == -1)
+    {
+        errno = result; // set errno on error
+    }
+    return result;
 }

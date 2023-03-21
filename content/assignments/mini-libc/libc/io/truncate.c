@@ -6,6 +6,10 @@
 
 int truncate(const char *path, off_t length)
 {
-	/* TODO: Implement lseek(). */
-	return -1;
+	int result = syscall(__NR_truncate, path, length);
+	if (result == -1)
+	{
+		errno = result;
+	}
+	return result;
 }

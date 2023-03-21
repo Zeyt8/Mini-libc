@@ -7,6 +7,10 @@
 
 int close(int fd)
 {
-	/* TODO: Implement lseek(). */
-	return -1;
+	int result = syscall(__NR_close, fd);
+	if (result == -1)
+	{
+		errno = result;
+	}
+	return result;
 }
