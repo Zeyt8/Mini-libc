@@ -16,11 +16,22 @@ char *strcpy(char *destination, const char *source)
 
 char *strncpy(char *destination, const char *source, size_t len)
 {
+	int found = 0;
 	for (size_t i = 0; i < len; i++)
 	{
-		destination[i] = source[i];
+		if (found == 1)
+		{
+			destination[i] = '\0';
+		}
+		else
+		{
+			destination[i] = source[i];
+			if (source[i] == '\0')
+			{
+				found = 1;
+			}
+		}
 	}
-	destination[len] = '\0';
 	return destination;
 }
 
@@ -43,6 +54,10 @@ char *strncat(char *destination, const char *source, size_t len)
 	for (size_t i = 0; i < len; i++)
 	{
 		ptr[i] = source[i];
+		if (source[i] == '\0')
+		{
+			return destination;
+		}
 	}
 	ptr[len] = '\0';
 	return destination;
