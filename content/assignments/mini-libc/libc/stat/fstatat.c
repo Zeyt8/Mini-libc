@@ -44,7 +44,7 @@ int fstatat_statx(int fd, const char *restrict path, struct stat *restrict st, i
 {
 	/* TODO: Implement fstatat_statx(). Use statx and makedev above. */
 	struct statx s;
-	int result = statx(fd, path, flag, __NR_statx, &s);
+	int result = syscall(__NR_statx, fd, path, flag, &s);
 
 	if (result == 0)
 	{
@@ -54,7 +54,7 @@ int fstatat_statx(int fd, const char *restrict path, struct stat *restrict st, i
 		st->st_nlink = s.stx_nlink;
 		st->st_uid = s.stx_uid;
 		st->st_gid = s.stx_gid;
-		st->st_rdev = makedev(s.stx_rdev_major, s.stx_rdev_minor);
+		//st->st_rdev = makedev(s.stx_rdev_major, s.stx_rdev_minor);
 		st->st_size = s.stx_size;
 		st->st_blksize = s.stx_blksize;
 		st->st_blocks = s.stx_blocks;
