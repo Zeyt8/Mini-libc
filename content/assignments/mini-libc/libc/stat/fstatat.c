@@ -43,11 +43,37 @@ struct statx {
 int fstatat_statx(int fd, const char *restrict path, struct stat *restrict st, int flag)
 {
 	/* TODO: Implement fstatat_statx(). Use statx and makedev above. */
-	return -1;
+	struct statx s;
+	int result = statx(fd, path, flag, __NR_statx, &s);
+
+	if (result == 0)
+	{
+		st->st_dev = makedev(s.stx_dev_major, s.stx_dev_minor);
+		st->st_ino = s.stx_ino;
+		st->st_mode = s.stx_mode;
+		st->st_nlink = s.stx_nlink;
+		st->st_uid = s.stx_uid;
+		st->st_gid = s.stx_gid;
+		st->st_rdev = makedev(s.stx_rdev_major, s.stx_rdev_minor);
+		st->st_size = s.stx_size;
+		st->st_blksize = s.stx_blksize;
+		st->st_blocks = s.stx_blocks;
+		st->st_atime = s.stx_atime.tv_sec;
+		st->st_mtime = s.stx_mtime.tv_sec;
+		st->st_ctime = s.stx_ctime.tv_sec;
+		return 0;
+	}
+
+	errno = result;
+	return errno;
 }
 
 int fstatat(int fd, const char *restrict path, struct stat *restrict st, int flag)
 {
-	/* TODO: Implement fstatat(). Use fstatat_statx(). */
-	return -1;
+	int result = fstatat_statx(fd, path, st, flag);
+	if (result == -1)
+	{
+		errno = result;
+	}
+	return result;
 }
