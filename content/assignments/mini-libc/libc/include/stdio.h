@@ -9,6 +9,8 @@ extern "C" {
 
 int puts(const char *str);
 
+int putchar(char c);
+
 #ifdef __cplusplus
 }
 #endif

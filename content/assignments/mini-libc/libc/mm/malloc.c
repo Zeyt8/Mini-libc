@@ -9,25 +9,42 @@
 
 void *malloc(size_t size)
 {
-	/* TODO: Implement malloc(). */
+  	if (size == 0)
+	{
+    	return NULL;
+  	}
+
 	return NULL;
 }
 
 void *calloc(size_t nmemb, size_t size)
 {
-	/* TODO: Implement malloc(). */
-	return NULL;
+	void* tmp = malloc(nmemb * size);
+	if (tmp != NULL)
+	{
+		memset(tmp, 0, nmemb * size);
+	}
+	return tmp;
 }
 
 void free(void *ptr)
 {
-	/* TODO: Implement free(). */
+	mem_list_del(ptr);
 }
 
 void *realloc(void *ptr, size_t size)
 {
-	/* TODO: Implement realloc(). */
-	return NULL;
+	if (ptr == NULL)
+	{
+		return malloc(size);
+	}
+	void *dest = malloc(size);
+    if (dest)
+	{
+        my_memncpy(dest, ptr, size);
+	}
+    free(ptr);
+    return dest;
 }
 
 void *reallocarray(void *ptr, size_t nmemb, size_t size)
