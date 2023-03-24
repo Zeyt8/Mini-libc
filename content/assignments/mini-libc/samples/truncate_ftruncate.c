@@ -1,11 +1,14 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
 
-#define SIZE_1	5000
-#define SIZE_2	10000
+#define SIZE1		5000
+#define SIZE2		10000
+
+#define FILENAME1	"./file1"
+#define FILENAME2	"./file2"
 
 int main(void)
 {
@@ -17,7 +20,7 @@ int main(void)
 	int fd1, fd2;
 	int r;
 
-	fd1 = open("./file1", O_CREAT | O_WRONLY, S_IWUSR);
+	fd1 = open(FILENAME1, O_CREAT | O_WRONLY, S_IWUSR);
 	if (fd1 < 0) {
 		write(1, "Something went wrong - open.\n", strlen("Something went wrong - open.\n"));
 		return -1;
@@ -28,21 +31,21 @@ int main(void)
 	 * Open should succeed.
 	 * Specify access mode as O_WRONLY and the user permissions as write to be able to truncate the file.
 	 */
-	fd2 = open("./file2", O_CREAT | O_WRONLY, S_IWUSR);
+	fd2 = open(FILENAME2, O_CREAT | O_WRONLY, S_IWUSR);
 	if (fd2 < 0) {
 		write(1, "Something went wrong - open.\n", strlen("Something went wrong - open.\n"));
 		return -1;
 	}
 
-	/* truncate to 5000 size "file1" */
-	r = truncate("./file1", SIZE_1);
+	/* Truncate FILENAME1 to SIZE1. */
+	r = truncate(FILENAME1, SIZE1);
 	if (r < 0) {
 		write(1, "Something went wrong - truncate.\n", strlen("Something went wrong - truncate.\n"));
 		return -1;
 	}
 
-	/* truncate to 10000 size "file2" */
-	r = ftruncate(fd2, SIZE_2);
+	/* Truncate FILENAME2 to SIZE2. */
+	r = ftruncate(fd2, SIZE2);
 	if (r < 0) {
 		write(1, "Something went wrong - ftruncate.\n", strlen("Something went wrong - ftruncate.\n"));
 		return -1;

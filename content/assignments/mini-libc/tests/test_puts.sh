@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # SPDX-License-Identifier: BSD-3-Clause
 
 source graded_test.inc.sh

@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #include <sys/mman.h>
 #include <errno.h>
@@ -7,7 +7,6 @@
 void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
 {
 	/* TODO: Implement mmap(). */
-	
 	return MAP_FAILED;
 }
 

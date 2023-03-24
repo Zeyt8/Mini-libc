@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # SPDX-License-Identifier: BSD-3-Clause
 
 source graded_test.inc.sh
@@ -25,19 +24,20 @@ test_mmap_munmap()
         exit 1
     fi
 
-    timeout -k 1 2 strace "$exec_file" 2>&1 > /dev/null | grep mmap > /dev/null
+    timeout -k 1 3 strace "$exec_file" 2>&1 > /dev/null | grep mmap > /dev/null
     if test $? -ne 0; then
         echo "No mmap syscall" 1>&2
         exit 1
     fi
 
     "$exec_file" &
+    sleep 1
     PID=$!
-    mem1=$(ps -o vsz --noheader --pid $PID)
+    mem1=$(ps -o vsz --noheader --pid "$PID")
     sleep 2
-    mem2=$(ps -o vsz --noheader --pid $PID)
-    kill $!
-    kill -9 $!
+    mem2=$(ps -o vsz --noheader --pid "$PID")
+    kill "$PID"
+    kill -9 "$PID"
 
     diff=$((mem2-mem1))
     if test "$diff" -gt 4; then

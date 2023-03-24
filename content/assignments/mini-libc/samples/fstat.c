@@ -1,10 +1,12 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
 #include <internal/types.h>
+
+#define FILENAME	"./file"
 
 static char *itoa(long i, char *b)
 {
@@ -36,7 +38,7 @@ int main(void)
 	memset(&s, 0, sizeof(s));
 
 	/* Create regular file with RW permissions for current user */
-	fd = open("./file", O_CREAT | O_RDWR, S_IRUSR);
+	fd = open(FILENAME, O_CREAT | O_RDWR, S_IRUSR);
 	if (fd < 0) {
 		write(1, "Something went wrong - create file.\n", strlen("Something went wrong - create file.\n"));
 		return -1;

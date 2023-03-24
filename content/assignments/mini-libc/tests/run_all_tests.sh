@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # SPDX-License-Identifier: BSD-3-Clause
 
 (
@@ -34,7 +33,7 @@
 ./test_mmap_perm_none.sh
 ) | tee results.txt
 
-total=$(cat results.txt | grep '\( passed \| failed \)' | rev | cut -d ' ' -f 1 | rev | paste -s -d'+' | bc)
+total=$(grep '\( passed \| failed \)' results.txt | rev | cut -d ' ' -f 1 | rev | paste -s -d'+' | bc)
 total_grade=$( (echo "scale=2"; echo "$total / 100") | bc )
 echo ""
 echo -n "Grade                           "

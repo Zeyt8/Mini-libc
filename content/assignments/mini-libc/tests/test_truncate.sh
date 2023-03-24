@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # SPDX-License-Identifier: BSD-3-Clause
 
 source graded_test.inc.sh
@@ -34,7 +33,7 @@ test_truncate()
         exit 1
     fi
 
-    diff <(stat --format="%s" ./existent_file) <(echo 20)     # check that file size is 20
+    diff -u <(stat --format="%s" ./existent_file) <(echo 20)     # check that file size is 20
     if test $? -ne 0; then
         rm -f ./existent_file
         exit 1

@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -14,7 +14,7 @@ static char *itoa(long i, char *b)
 {
 	char const digit[] = "0123456789";
 	char *p = b;
-	int shifter = i;
+	long shifter = i;
 
 	do {
 		++p;

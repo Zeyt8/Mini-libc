@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # SPDX-License-Identifier: BSD-3-Clause
 
 source graded_test.inc.sh
@@ -65,7 +64,7 @@ test_open_close_read_byte()
     fi
 
     echo "a" > "./existent_file"                         # create file
-    diff <("$exec_file") <(echo "a")        # check read data
+    diff -u <("$exec_file") <(echo "a")        # check read data
 
     if test $? -ne 0; then
         rm -f ./existent_file

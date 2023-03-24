@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #include <string.h>
 
@@ -10,6 +10,12 @@ static int test_strcpy(void)
 	char dst[128];
 	size_t len;
 
+	/*
+	 * Add 'Z' on future correct location of the NUL-terminator.
+	 * This way, in case of a faulty implementation that fails to
+	 * add the NUL-terminator, the test will fail.
+	 */
+	dst[sizeof(src)-1] = 'Z';
 	strcpy(dst, src);
 	len = strlen(dst);
 
@@ -22,6 +28,7 @@ static int test_strcpy_append(void)
 	char dst[128];
 	size_t len;
 
+	dst[2*sizeof(src) - 2] = 'Z';
 	strcpy(dst, src);
 	strcpy(dst + sizeof(src)-1, src);
 	len = strlen(dst);
@@ -35,6 +42,7 @@ static int test_strncpy(void)
 	char dst[128];
 	size_t len;
 
+	dst[sizeof(src)-1] = 'Z';
 	strncpy(dst, src, 128);
 	len = strlen(dst);
 
@@ -62,6 +70,7 @@ static int test_strcat(void)
 	char dst[128];
 	size_t len;
 
+	dst[sizeof(part1) + sizeof(part2) - 2] = 'Z';
 	strcpy(dst, part1);
 	strcat(dst, part2);
 	len = strlen(dst);
@@ -90,6 +99,7 @@ static int test_strcat_multiple(void)
 	char dst[128];
 	size_t len;
 
+	dst[sizeof(part1) + sizeof(part2) + sizeof(part3) - 3] = 'Z';
 	strcpy(dst, part1);
 	strcat(dst, part2);
 	strcat(dst, part3);
@@ -105,6 +115,7 @@ static int test_strncat(void)
 	char dst[128];
 	size_t len;
 
+	dst[sizeof(part1) + sizeof(part2) - 2] = 'Z';
 	strcpy(dst, part1);
 	strncat(dst, part2, 128 - sizeof(part1));
 	len = strlen(dst);

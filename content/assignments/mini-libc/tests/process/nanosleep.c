@@ -1,6 +1,7 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #include <time.h>
+#include <stddef.h>
 
 int main(void)
 {

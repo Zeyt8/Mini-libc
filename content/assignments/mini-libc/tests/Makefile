@@ -1,6 +1,8 @@
 LIBC_PATH ?= ../libc
 CPPFLAGS = -nostdinc -I. -I$(LIBC_PATH)/include
 CFLAGS = -Wall -Wextra -fno-PIC -fno-stack-protector -fno-builtin
+# Remove the line below to disable debugging support.
+CFLAGS += -g -O0
 LDFLAGS = -nostdlib -no-pie -L$(LIBC_PATH)
 LDLIBS = -lc
 
@@ -9,7 +11,7 @@ OBJS = $(patsubst %.c,%.o,$(SRCS))
 EXECS = $(patsubst %.c,%,$(SRCS))
 
 
-.PHONY: all clean libc io memory process
+.PHONY: all clean libc io memory process check
 
 all: libc io memory process $(EXECS)
 
@@ -31,6 +33,12 @@ process:
 
 libc:
 	make -C $(LIBC_PATH)
+
+check:
+	make -C $(LIBC_PATH) clean
+	make clean
+	make -i LIBC_PATH=$(LIBC_PATH)
+	./run_all_tests.sh
 
 clean:
 	make -C io clean

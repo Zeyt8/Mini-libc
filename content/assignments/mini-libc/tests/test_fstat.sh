@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # SPDX-License-Identifier: BSD-3-Clause
 
 source graded_test.inc.sh
@@ -28,7 +27,7 @@ test_fstat()
 
     touch ./existent_file         # create file
 
-    diff <(stat --format="%i %u %g %h %b %s %Y" "./existent_file") <("$exec_file")
+    diff -u <(stat --format="%i %u %g %h %b %s %Y" "./existent_file") <("$exec_file")
     if test $? -ne 0; then
         rm -f ./existent_file
         exit 1
