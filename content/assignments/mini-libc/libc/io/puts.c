@@ -7,7 +7,7 @@ int puts(const char *str)
 
     while (*str)
     {
-        int result = putc(*str++);
+        int result = putchar(*str++);
         if (result < 0)
         {
             return result;
