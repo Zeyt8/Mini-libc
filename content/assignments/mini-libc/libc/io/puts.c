@@ -5,9 +5,10 @@ int puts(const char *str)
 {
     int len = 0;
 
+    int result;
     while (*str)
     {
-        int result = putchar(*str++);
+        result = putchar(*str++);
         if (result < 0)
         {
             return result;
@@ -16,6 +17,15 @@ int puts(const char *str)
         {
             len += result;
         }
+    }
+    result = putchar('\n');
+    if (result < 0)
+    {
+        return result;
+    }
+    else
+    {
+        len += result;
     }
     return len;
 }

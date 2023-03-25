@@ -1,1 +1,1 @@
-int nanosleep(const struct timespec *req, struct timespec *rem);
+//int nanosleep(const struct timespec *req, struct timespec *rem);
