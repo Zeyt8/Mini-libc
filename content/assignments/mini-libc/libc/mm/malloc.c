@@ -9,12 +9,12 @@
 
 void *malloc(size_t size)
 {
-  	if (size == 0)
+	struct mem_list *result = mem_list_alloc();
+  	if (size < 0)
 	{
-    	return NULL;
+    	return -1;
   	}
-
-	return NULL;
+	return result;
 }
 
 void *calloc(size_t nmemb, size_t size)

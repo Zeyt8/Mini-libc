@@ -8,9 +8,10 @@
 int close(int fd)
 {
 	int result = syscall(__NR_close, fd);
-	if (result == -1)
+	if (result < 0)
 	{
-		errno = result;
+		errno = -result;
+		return -1;
 	}
 	return result;
 }

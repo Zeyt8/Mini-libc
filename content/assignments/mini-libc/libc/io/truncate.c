@@ -7,9 +7,10 @@
 int truncate(const char *path, off_t length)
 {
 	int result = syscall(__NR_truncate, path, length);
-	if (result == -1)
+	if (result < 0)
 	{
-		errno = result;
+		errno = -result;
+		return -1;
 	}
 	return result;
 }

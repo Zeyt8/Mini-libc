@@ -15,10 +15,11 @@ int open(const char *filename, int flags, ...)
         mode = va_arg(arg_list, mode_t);
         va_end(arg_list);
     }
-    int result = syscall(__NR_open, filename, flags, mode);
-    if (result == -1)
+    int result = syscall(__NR_openat, AT_FDCWD, filename, flags, mode);
+    if (result < 0)
     {
-        errno = result;
+        errno = -result;
+        return -1;
     }
     return result;
 }
