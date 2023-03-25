@@ -1,6 +1,7 @@
 #include <time.h>
 #include <errno.h>
 #include <internal/syscall.h>
+#include <stddef.h>
 
 int nanosleep(const struct timespec *req, struct timespec *rem)
 {

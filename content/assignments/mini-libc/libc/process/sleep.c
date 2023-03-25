@@ -15,7 +15,8 @@ unsigned int sleep(unsigned int seconds)
         }
         else
         {
-            return;
+            return rem.tv_sec;
         }
     }
+    return 0;
 }

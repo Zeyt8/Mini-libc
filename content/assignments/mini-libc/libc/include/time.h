@@ -5,8 +5,6 @@
 extern "C" {
 #endif
 
-#define NULL (void*)0
-
 struct timespec
 {
     unsigned int tv_sec;

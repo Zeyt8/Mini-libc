@@ -9,12 +9,12 @@
 
 void *malloc(size_t size)
 {
-	struct mem_list *result = mem_list_alloc();
-  	if (size < 0)
+	int result = mem_list_add(mem_list_head.prev->start + mem_list_head.prev->len, size);
+	if (result < 0)
 	{
-    	return -1;
-  	}
-	return result;
+		return NULL;
+	}
+	return mem_list_head.prev->start;
 }
 
 void *calloc(size_t nmemb, size_t size)
@@ -41,7 +41,7 @@ void *realloc(void *ptr, size_t size)
 	void *dest = malloc(size);
     if (dest)
 	{
-        my_memncpy(dest, ptr, size);
+        memcpy(dest, ptr, size);
 	}
     free(ptr);
     return dest;
@@ -49,6 +49,5 @@ void *realloc(void *ptr, size_t size)
 
 void *reallocarray(void *ptr, size_t nmemb, size_t size)
 {
-	/* TODO: Implement reallocarray(). */
-	return NULL;
+	return realloc(ptr, nmemb * size);
 }
