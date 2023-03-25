@@ -13,7 +13,7 @@ void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
 		errno = -res;
 		return MAP_FAILED;
 	}
-	return addr;
+	return result;
 }
 
 void *mremap(void *old_address, size_t old_size, size_t new_size, int flags)
