@@ -190,16 +190,32 @@ void *memcpy(void *destination, const void *source, size_t num)
 
 void *memmove(void *destination, const void *source, size_t num)
 {
-	char tmp[num];
-	for (size_t i = 0; i < num; i++)
+	char dir;
+  	size_t end;
+  	size_t current;
+
+  	if(destination != source)
 	{
-		tmp[i] = ((char *)source)[i];
-	}
-	for (size_t i = 0; i < num; i++)
-	{
-		((char *)destination)[i] = tmp[i];
-	}
-	return destination;
+    	if(destination < source)
+		{
+      		dir = 1;
+      		current = 0;
+      		end = num;
+    	}
+		else
+		{
+      		dir = -1;
+      		current = num - 1;
+      		end = -1;
+    	}
+
+		while (current != end)
+		{
+			((char *)destination)[current] = ((char *)source)[current];
+			current += dir;
+		}
+  	}
+  	return destination;
 }
 
 int memcmp(const void *ptr1, const void *ptr2, size_t num)
