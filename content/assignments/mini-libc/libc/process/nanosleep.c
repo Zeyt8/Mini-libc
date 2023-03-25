@@ -10,16 +10,16 @@ int nanosleep(const struct timespec *req, struct timespec *rem)
         return -1;
     }
 
-    int response = syscall(__NR_nanosleep, req, rem);
+    int result = syscall(__NR_nanosleep, req, rem);
 
-    if (response == -1)
+    if (result == -1)
     {
         errno = EINTR;
         return -1;
     }
-    else if (response < 0)
+    else if (result < 0)
     {
-        errno = -response;
+        errno = -result;
         return -1;
     }
     return 0;
