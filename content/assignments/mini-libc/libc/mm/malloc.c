@@ -9,12 +9,17 @@
 
 void *malloc(size_t size)
 {
-	int result = mem_list_add(mem_list_head.prev->start + mem_list_head.prev->len, size);
+	struct mem_list* prev = &mem_list_head;
+	if (prev->prev != NULL)
+	{
+		prev = prev->prev;
+	}
+	int result = mem_list_add(prev->start + prev->len, size);
 	if (result < 0)
 	{
 		return NULL;
 	}
-	return mem_list_head.prev->start;
+	return prev->start;
 }
 
 void *calloc(size_t nmemb, size_t size)
