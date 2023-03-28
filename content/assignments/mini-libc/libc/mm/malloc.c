@@ -10,7 +10,7 @@
 void *malloc(size_t size)
 {
 	void* tmp = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-	if (tmp == NULL)
+	if (tmp == MAP_FAILED)
 	{
 		return NULL;
 	}
