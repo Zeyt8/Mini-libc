@@ -9,17 +9,17 @@
 
 void *malloc(size_t size)
 {
-	struct mem_list* prev = &mem_list_head;
-	if (prev->prev != NULL)
+	void* tmp = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	if (tmp == NULL)
 	{
-		prev = prev->prev;
+		return NULL;
 	}
-	int result = mem_list_add(prev->start + prev->len, size);
+	int result = mem_list_add(tmp, size);
 	if (result < 0)
 	{
 		return NULL;
 	}
-	return prev->start;
+	return tmp;
 }
 
 void *calloc(size_t nmemb, size_t size)
@@ -34,6 +34,12 @@ void *calloc(size_t nmemb, size_t size)
 
 void free(void *ptr)
 {
+	struct mem_list *item = mem_list_find(ptr);
+	int result = munmap(ptr, item->len);
+	if (result < 0)
+	{
+		return;
+	}
 	mem_list_del(ptr);
 }
 
