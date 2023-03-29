@@ -16,6 +16,11 @@ void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
 			return MAP_FAILED;
     	}
 	}
+	if (!(flags & MAP_PRIVATE || flags & MAP_SHARED))
+	{
+		errno = EINVAL;
+		return MAP_FAILED;
+	}
 	void* result = (void*)syscall(__NR_mmap, addr, length, prot, flags, fd, offset);
 	int res = *((int*)result);
 	if (res < 0)
